@@ -1,3 +1,11 @@
+function getIndex(list,id) {
+    for (var i = 0; i < list.length; i++) {
+        if (list[i].id === id) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 var messageApi = Vue.resource('/message{/id}')
 
@@ -5,7 +13,8 @@ Vue.component('message-form', {
     props:['messages','messageAttr'],
     data: function () {
         return {
-            text:''
+            text:'',
+            id:''
         };
     },
     watch:{
@@ -23,12 +32,25 @@ Vue.component('message-form', {
         save: function () {
             var message = {text: this.text};
 
-            messageApi.save({},message).then(result=>
+            if (this.id) {
+                messageApi.update({id:this.id},message).then(result=>
+                    result.json().then(data=>{
+                        var index = getIndex(this.messages, data.id);
+                        this.messages.splice(index,1,data);
+                        this.text = '';
+                        this.id = '';
+                    })
+                );
+            } else {
+                messageApi.save({},message).then(result=>
                 result.json().then(data=>{
                     this.messages.push(data);
                     this.text = '';
-                })
-            )
+                    })
+                )
+            }
+
+
         }
     }
 });
