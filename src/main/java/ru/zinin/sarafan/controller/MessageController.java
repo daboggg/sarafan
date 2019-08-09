@@ -59,7 +59,6 @@ public class MessageController {
     public void delete(@PathVariable String id) {
         Map<String, String> message = getMessage(id);
         messages.remove(message);
-        counter--;
     }
 }
 
