@@ -49,8 +49,6 @@ Vue.component('message-form', {
                     })
                 )
             }
-
-
         }
     }
 });
@@ -105,17 +103,18 @@ var app = new Vue({
         '<div v-else>' +
             '<div>{{profile.name}}&nbsp;<a href="/logout">Выйти</a> </div>' +
             '<messages-list :messages="messages"/>' +
-        '</divv-else>'+
+        '</div>'+
         '</div>',
     data: {
         messages: frontendData.messages,
         profile: frontendData.profile
     },
     created:function () {
-        // messageApi.get().then(
-        //     result => result.json().then(data=>data.forEach(message=>
-        // this.messages.push(message))
-        //     )
-        // )
+        messageApi.get().then(
+            result => result.json().then(data=>
+                data.forEach(message=>
+        this.messages.push(message))
+            )
+        )
     }
 });
