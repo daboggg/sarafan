@@ -2,10 +2,16 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import App from 'pages/App.vue'
 import { connect } from "./util/ws";
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min'
+// import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-connect()
+if (frontendData.profile) {
+    connect()
+}
 
 Vue.use(VueResource)
+Vue.use(Vuetify)
 
 new Vue({
     el:'#app',
