@@ -22,7 +22,6 @@ export default new Vuex.Store({
                     message
                 ];
             }
-
         },
         updateMessageMutation(state, message) {
 
